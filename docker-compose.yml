@@ -1,0 +1,63 @@
+# version: '3.9'
+
+services:
+  yorozuya-dev:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+      target: dev
+    image: yorozuya-dev
+    container_name: yorozuya-dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: ./
+        target: /go/src
+    tty: true
+    depends_on:
+      - db
+    # networks:
+    #   - external
+    #   - internal
+
+  # yorozuya-deploy:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/app/Dockerfile
+  #     target: deploy
+  #   image: yorozuya-deploy
+  #   container_name: yorozuya-deploy
+  #   ports:
+  #     - "8080:8080"
+  #   tty: true
+  #   depends_on:
+  #     - db
+  #   # networks:
+  #   #   - external
+  #   #   - internal
+
+  db:
+    image: mysql:latest
+    container_name: db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: yorozuya
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./docker/db/data/mysql:/var/lib/mysql
+      - ./docker/db/config/my.cnf:/etc/mysql/conf.d/my.cnf
+    # networks:
+    #   - internal
+
+# networks:
+#   external:
+#     name: external
+#     driver: bridge
+#   internal:
+#     name: internal
+#     internal: true
