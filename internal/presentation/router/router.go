@@ -17,6 +17,7 @@ func NewRouter(db *gorm.DB) *gin.Engine {
 	{
 		user.POST("/create", userController.CreateUser)
 		user.GET("/:id", userController.GetUserById)
+		user.PUT("/:id", userController.IncrementAge)
 	}
 	return r
 }

@@ -19,4 +19,5 @@ type User struct {
 type UserRepository interface {
 	CreateUser(name, email string, age uint8, birthday time.Time) (User, error)
 	GetUserById(id uint) (User, error)
+	UpdateUser(User) (User, error)
 }

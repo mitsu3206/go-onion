@@ -33,3 +33,11 @@ func (ur userRepository) GetUserById(id uint) (model.User, error) {
 	}
 	return user, nil
 }
+
+func (ur userRepository) UpdateUser(user model.User) (model.User, error) {
+	result := ur.db.Updates(&user)
+	if result.Error != nil {
+		log.Fatalln(result.Error)
+	}
+	return user, nil
+}

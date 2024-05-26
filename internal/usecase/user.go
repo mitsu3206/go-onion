@@ -9,6 +9,7 @@ import (
 type UserUsecase interface {
 	CreateUser(name, email string, age uint8, birthday time.Time) (model.User, error)
 	GetUserById(id uint) (model.User, error)
+	IncrementAge(id uint) (model.User, error)
 }
 
 type userUsecase struct {
@@ -29,6 +30,19 @@ func (uu userUsecase) CreateUser(name, email string, age uint8, birthday time.Ti
 
 func (uu userUsecase) GetUserById(id uint) (model.User, error) {
 	user, err := uu.userRepository.GetUserById(id)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return user, nil
+}
+
+func (uu userUsecase) IncrementAge(id uint) (model.User, error) {
+	user, err := uu.userRepository.GetUserById(id)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	user.Age++
+	user, err = uu.userRepository.UpdateUser(user)
 	if err != nil {
 		log.Fatalln(err)
 	}
