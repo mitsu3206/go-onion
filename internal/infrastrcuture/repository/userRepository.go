@@ -41,3 +41,11 @@ func (ur userRepository) UpdateUser(user model.User) (model.User, error) {
 	}
 	return user, nil
 }
+
+func (ur userRepository) DeleteUser(user model.User) error {
+	result := ur.db.Delete(&user)
+	if result.Error != nil {
+		log.Fatalln(result.Error)
+	}
+	return nil
+}

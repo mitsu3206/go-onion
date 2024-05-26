@@ -10,6 +10,7 @@ type UserUsecase interface {
 	CreateUser(name, email string, age uint8, birthday time.Time) (model.User, error)
 	GetUserById(id uint) (model.User, error)
 	IncrementAge(id uint) (model.User, error)
+	DeleteUser(id uint) error
 }
 
 type userUsecase struct {
@@ -47,4 +48,16 @@ func (uu userUsecase) IncrementAge(id uint) (model.User, error) {
 		log.Fatalln(err)
 	}
 	return user, nil
+}
+
+func (uu userUsecase) DeleteUser(id uint) error {
+	user, err := uu.userRepository.GetUserById(id)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	err = uu.userRepository.DeleteUser(user)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return nil
 }
