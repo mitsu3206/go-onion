@@ -10,6 +10,12 @@ services:
     container_name: yorozuya-dev
     ports:
       - "8080:8080"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: yorozuya
+      DB_USER: user
+      DB_PASS: password
     volumes:
       - type: bind
         source: ./
