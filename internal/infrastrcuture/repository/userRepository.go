@@ -24,3 +24,12 @@ func (ur userRepository) CreateUser(name, email string, age uint8, birthday time
 	}
 	return model.User{ID: user.ID, Name: user.Name, Email: user.Email, Age: user.Age, Birthday: user.Birthday}, nil
 }
+
+func (ur userRepository) GetUserById(id uint) (model.User, error) {
+	user := model.User{}
+	result := ur.db.First(&user, id)
+	if result.Error != nil {
+		log.Fatalln(result.Error)
+	}
+	return user, nil
+}

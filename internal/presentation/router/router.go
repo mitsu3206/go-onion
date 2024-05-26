@@ -16,6 +16,7 @@ func NewRouter(db *gorm.DB) *gin.Engine {
 	user := r.Group("user")
 	{
 		user.POST("/create", userController.CreateUser)
+		user.GET("/:id", userController.GetUserById)
 	}
 	return r
 }
