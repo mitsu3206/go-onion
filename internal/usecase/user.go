@@ -24,7 +24,7 @@ func NewUserUsecase(ur model.UserRepository) UserUsecase {
 func (uu userUsecase) CreateUser(name, email string, age uint8, birthday time.Time) (model.User, error) {
 	user, err := uu.userRepository.CreateUser(name, email, age, birthday)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	return user, nil
 }
@@ -32,7 +32,7 @@ func (uu userUsecase) CreateUser(name, email string, age uint8, birthday time.Ti
 func (uu userUsecase) GetUserById(id uint) (model.User, error) {
 	user, err := uu.userRepository.GetUserById(id)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	return user, nil
 }
@@ -40,12 +40,12 @@ func (uu userUsecase) GetUserById(id uint) (model.User, error) {
 func (uu userUsecase) IncrementAge(id uint) (model.User, error) {
 	user, err := uu.userRepository.GetUserById(id)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	user.Age++
 	user, err = uu.userRepository.UpdateUser(user)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	return user, nil
 }
@@ -53,11 +53,11 @@ func (uu userUsecase) IncrementAge(id uint) (model.User, error) {
 func (uu userUsecase) DeleteUser(id uint) error {
 	user, err := uu.userRepository.GetUserById(id)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	err = uu.userRepository.DeleteUser(user)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	return nil
 }

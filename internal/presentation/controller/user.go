@@ -28,13 +28,13 @@ func NewUserController(uu usecase.UserUsecase) *userController {
 func (uc userController) CreateUser(c *gin.Context) {
 	var json CreateJson
 	if err := c.ShouldBindJSON(&json); err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	user, err := uc.userUsecase.CreateUser(json.Name, json.Email, json.Age, json.Birthday)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -44,11 +44,11 @@ func (uc userController) CreateUser(c *gin.Context) {
 func (uc userController) GetUserById(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Params.ByName("id"), 10, 64)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 	user, err := uc.userUsecase.GetUserById(uint(id))
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -58,13 +58,13 @@ func (uc userController) GetUserById(c *gin.Context) {
 func (uc userController) IncrementAge(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Params.ByName("id"), 10, 64)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	user, err := uc.userUsecase.IncrementAge(uint(id))
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -74,13 +74,13 @@ func (uc userController) IncrementAge(c *gin.Context) {
 func (uc userController) DeleteUser(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Params.ByName("id"), 10, 64)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	err = uc.userUsecase.DeleteUser(uint(id))
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
