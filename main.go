@@ -8,7 +8,6 @@ import (
 
 func main() {
 	// timezoneをプログラムで設定する場合、以下のコメントを外す。
-	// time.Local = time.FixedZone("JST", 0)
 	// os.Setenv("TZ", "Asia/Tokyo")
 	db := database.NewGorm()
 	db.AutoMigrate(&model.User{})

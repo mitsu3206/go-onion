@@ -17,8 +17,12 @@ type User struct {
 }
 
 type UserRepository interface {
-	CreateUser(name, email string, age uint8, birthday time.Time) (User, error)
+	CreateUser(User) (User, error)
 	GetUserById(id uint) (User, error)
 	UpdateUser(User) (User, error)
 	DeleteUser(User) error
+}
+
+func NewUser(name, email string, age uint8) User {
+	return User{Name: name, Email: &email, Age: age}
 }

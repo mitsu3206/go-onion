@@ -22,7 +22,8 @@ func NewUserUsecase(ur model.UserRepository) UserUsecase {
 }
 
 func (uu userUsecase) CreateUser(name, email string, age uint8, birthday time.Time) (model.User, error) {
-	user, err := uu.userRepository.CreateUser(name, email, age, birthday)
+	user := model.NewUser(name, email, age)
+	user, err := uu.userRepository.CreateUser(user)
 	if err != nil {
 		log.Println(err)
 	}
