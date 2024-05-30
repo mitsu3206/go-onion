@@ -16,6 +16,8 @@ services:
       DB_NAME: yorozuya
       DB_USER: user
       DB_PASS: password
+      # timezoneをenvで設定する場合、以下のコメントを外す。
+      # TZ: 'Asia/Tokyo'
     volumes:
       - type: bind
         source: ./
