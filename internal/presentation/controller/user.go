@@ -40,7 +40,7 @@ func (uc userController) CreateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"user": user})
+	c.JSON(http.StatusCreated, gin.H{"user": user})
 }
 
 func (uc userController) GetUserById(c *gin.Context) {
@@ -73,6 +73,11 @@ func (uc userController) IncrementAge(c *gin.Context) {
 	}
 	user, err := uc.userUsecase.IncrementAge(uint(id))
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			log.Println(err)
+			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -89,6 +94,11 @@ func (uc userController) DeleteUser(c *gin.Context) {
 	}
 	err = uc.userUsecase.DeleteUser(uint(id))
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			log.Println(err)
+			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
